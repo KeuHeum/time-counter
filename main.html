@@ -1,0 +1,92 @@
+<!--
+    꽃가루: https://kmkblog.tistory.com/292?category=1065511
+    루프  : https://ko.javascript.info/settimeout-setinterval
+    루프  : http://www.devkuma.com/books/pages/1193
+    0 채움: https://blogpack.tistory.com/600
+    루프 c: http://yoonbumtae.com/?p=1168
+-->
+<!---->
+<html lang="ko">
+
+<head>
+  <title>Count the Time</title>
+  <!--기본 표시-->
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="heart.png">
+  <meta name="description" content="Count the Time!">
+  <meta name="author" content="KeuHeum">
+
+  <!--스크립트-->
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="confetti.js"></script>
+  <script>
+    $(document).ready(
+      function()
+    {  
+      $("#stopButton").hide();
+      $("#startButton").hide();
+
+      function Action(){console.log("dd");$("#startButton").trigger("click")}
+      function unAction(){$("#stopButton").trigger("click")} 
+      function make_zero(num){return num.toString().padStart(2,'0')}
+      function loop()
+      {
+        let today = new Date(); 
+
+        //날짜
+        $("#time-day").text(make_zero(today.getFullYear()) + "-" + make_zero(today.getMonth() + 1) + "-" + make_zero(today.getDate()));
+        //시간 계산
+        let hour = make_zero(today.getHours());
+        let min = make_zero(today.getMinutes());
+        let sec = make_zero(today.getSeconds());
+        //시간이 00:00:00이라면 폭죽!(딜레이 때문에 1초 빨리 실행)
+        if (hour==23&&min==59&&sec==59){Action();}
+        //시간이 00:05:00이라면 폭죽 끝!
+        else if(hour==00&&min==03&&sec==00){unAction();}
+        //시간 
+        $("#time-hms").text(hour + ':' + min + ':' + sec);
+
+        //남은시간 계산
+        hour = Number(hour) + 1;
+        min = Number(min) + 1;
+        sec = Number(sec) + 1;
+        hour = 24 - hour;
+        min = 60 - min;
+        sec = 60 - sec;
+
+        //남은 시간
+        $("#time-left").text(make_zero(hour) + ':' + make_zero(min) + ':' + make_zero(sec));
+      }
+      //기본 숫자 안보이게 하려고
+      loop()
+      let inter = setInterval(loop, 100);
+    }
+    );
+
+    </script>
+
+  <!--css-->
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<div style="text-align: center; font-weight: bold; font-size: 13em;">COUNT</div>
+<div style="text-align: center; opacity: 0; font-size: 2em;">00</div>
+<div style="text-align: center; font-size: 3em;" id="time-day">0000-00-00</div>
+<div style="text-align: center; opacity: 0; font-size: 2em;">00</div>
+<div style="text-align: center; font-size: 7em;" id="time-hms">00:00:00</div>
+<div style="text-align: center; opacity: 0; font-size: 2em;">00</div>
+<div style="text-align: center; font-size: 1.5em;" id="time-strleft">남은시간</div>
+<div style="text-align: center; font-size: 1.5em;" id="time-left">00분 00초</div>
+<!--꽃가루-->
+<style>canvas{z-index:10;pointer-events: none;position: fixed;top: 0;transform: scale(1.1);}</style>
+<canvas id="canvas"></canvas>
+
+<div class="buttonContainer">
+	<button class="canvasBtn" id="stopButton">Stop Confetti</button>
+	<button class="canvasBtn" id="startButton">Drop Confetti</button>
+</div>
+
+</body>
+
+</html>
