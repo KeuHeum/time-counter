@@ -1,0 +1,100 @@
+<!--
+    꽃가루: https://kmkblog.tistory.com/292?category=1065511
+    루프  : https://ko.javascript.info/settimeout-setinterval
+    루프  : http://www.devkuma.com/books/pages/1193
+    0 채움: https://blogpack.tistory.com/600
+-->
+<!---->
+<html lang="ko">
+
+<head>
+  <title>Christmas</title>
+  <!--기본 표시-->
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="./christmas/heart.png">
+  <meta name="description" content="Time to Christmas!">
+  <meta name="author" content="KeuHeum">
+
+  <!--스크립트-->
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="./christmas/confetti.js"></script>
+  <script>
+    $(document).ready(function(){  
+      $("#stopButton").hide();
+      $("#startButton").hide();
+
+      function Action(){$("#startButton").trigger("click")}
+      function unAction(){$("#stopButton").trigger("click")} 
+      function getTime() {
+        const xmasDay = new Date("2021-12-25");
+        const currDay = new Date();
+      
+        let diff = xmasDay - currDay;
+        const diffDays = Math.floor((xmasDay.getTime() - currDay.getTime()) / (1000 * 60 * 60 * 24));
+        diff -= diffDays * (1000 * 60 * 60 * 24);
+        const diffHours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= diffHours * (1000 * 60 * 60);
+        const diffMin = Math.floor(diff / (1000 * 60));
+        diff -= diffMin * (1000 * 60);
+        const diffSec = Math.floor(diff / 1000);
+        console.log(diffMin < 10 ? `0${diffMin}` : diffMin)
+        if (diffMin < 10 ? `0${diffMin}` : diffMin !== 00 
+        || diffMin < 10 ? `0${diffMin}` : diffMin !== 0 
+        || diffMin < 10 ? `0${diffMin}` : diffMin !== 10){
+          return `${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec}초`;
+        }else{
+          return `${diffSec < 10 ? `0${diffSec}` : diffSec}초`;
+        }
+        
+        }
+      function loop(){
+        let today = new Date(); 
+
+        let hour = today.getHours().toString().padStart(2,'0')
+        let min = today.getMinutes().toString().padStart(2,'0')
+        let sec = today.getSeconds().toString().padStart(2,'0')
+
+        if (today.getDate().toString() == '25'){
+            $("#time-day").text("2021-12-25")
+            $("#time-left").hide();
+            $("#time-strleft").hide();
+            Action();
+            clearInterval(inter);
+        }else{
+            $("#time-left").text(getTime())
+        }
+        
+        $("#time-hms").text(hour + ':' + min + ':' + sec);
+      }
+      let inter = setInterval(loop, 100);
+    });
+
+    </script>
+
+  <!--css-->
+  <link rel="stylesheet" href="./christmas/index.css">
+</head>
+
+<body>
+<div style="text-align: center; font-weight: bold; font-size: 13em;">COUNT</div>
+<div style="text-align: center; opacity: 0; font-size: 2em;">00</div>
+<div style="text-align: center; font-size: 3em;" id="time-day">2021-12-24</div>
+<div style="text-align: center; opacity: 0; font-size: 2em;">00</div>
+<div style="text-align: center; font-size: 7em;" id="time-hms">00:00:00</div>
+<div style="text-align: center; opacity: 0; font-size: 2em;">00</div>
+<div style="text-align: center; font-size: 1.5em;" id="time-strleft">남은시간</div>
+<div style="text-align: center; font-size: 1.5em;" id="time-left">00분 00초</div>
+<!--꽃가루-->
+<style>canvas{z-index:10;pointer-events: none;position: fixed;top: 0;transform: scale(1.1);}</style>
+<canvas id="canvas"></canvas>
+
+<div class="buttonContainer">
+	<button class="canvasBtn" id="stopButton">Stop Confetti</button>
+	<button class="canvasBtn" id="startButton">Drop Confetti</button>
+</div>
+
+
+
+</body>
+
+</html>
