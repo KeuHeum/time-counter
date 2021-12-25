@@ -41,7 +41,7 @@
         let sec = make_zero(today.getSeconds());
         //시간이 00:00:00이라면 폭죽!(딜레이 때문에 1초 빨리 실행)
         if (hour==23&&min==59&&sec==59){Action();}
-        //시간이 00:05:00이라면 폭죽 끝!
+        //시간이 00:03:00이라면 폭죽 끝!
         else if(hour==00&&min==03&&sec==00){unAction();}
         //시간 
         $("#time-hms").text(hour + ':' + min + ':' + sec);
