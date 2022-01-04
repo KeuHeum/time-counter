@@ -29,6 +29,13 @@
       function Action(){$("#startButton").trigger("click")}
       function unAction(){$("#stopButton").trigger("click")} 
       function make_zero(num){return num.toString().padStart(2,'0')}
+      function first_confetti(){
+        let today_con = new Date(); 
+        let hour_con = make_zero(today_con.getHours());
+        let min_con = make_zero(today_con.getMinutes());
+        let sec_con = make_zero(today_con.getSeconds());
+        if (hour_con==00&&min_con==00 || hour_con==00&&min_con==01 || hour_con==00&&min_con==02){Action();}
+      }
       function loop()
       {
         let today = new Date(); 
@@ -59,6 +66,7 @@
       }
       //기본 숫자 안보이게 하려고
       loop()
+      first_confetti()
       let inter = setInterval(loop, 100);
     }
     );
